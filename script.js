@@ -21,7 +21,7 @@ function imageLoaded() {
   imagesLoaded++
   if (imagesLoaded === totalImages) {
     readyToLoad = true
-    console.log('ready = ', readyToLoad)
+    loader.hidden = true
   }
 }
 
@@ -58,7 +58,6 @@ function displayPhotos() {
     // Event Listener, check when each image is finished loading
     img.addEventListener('load', imageLoaded)
   })
-  console.log(photosArray)
 }
 
 // Get photos from Unsplash API
@@ -107,7 +106,6 @@ window.addEventListener('scroll', () => {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - triggerPoint && readyToLoad) {
     getPhotos()
     readyToLoad = false
-    console.log('Loading spot achieved')
   }
 })
 
