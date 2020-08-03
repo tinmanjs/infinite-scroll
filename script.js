@@ -3,6 +3,9 @@ const loader = document.getElementById('loader')
 
 let photosArray = []
 
+// Number of pixels from the bottom to start loading
+const triggerPoint = 1000
+
 // Unsplash API
 const count = 10
 const apiKey = 'YOUR_KEY'
@@ -80,6 +83,14 @@ async function getPhotos() {
     displayPhotos()
   }
 }
+
+// Check to see if scrolling near bottom of page, load more photos
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - triggerPoint) {
+    getPhotos()
+    console.log('Loading spot achieved')
+  }
+})
 
 // On Load
 getPhotos()
