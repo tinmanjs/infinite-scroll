@@ -6,10 +6,24 @@ let photosArray = []
 // Number of pixels from the bottom to start loading
 const triggerPoint = 1000
 
+// Flags in order to control image loading
+let readyToLoad = false
+let imagesLoaded = 0
+let totalImages = 0
+
 // Unsplash API
-const count = 10
+const imageSetCount = 30
 const apiKey = 'YOUR_KEY'
-const apiURL = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`
+const apiURL = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${imageSetCount}`
+
+// Check if all images were loaded
+function imageLoaded() {
+  imagesLoaded++
+  if (imagesLoaded === totalImages) {
+    readyToLoad = true
+    console.log('ready = ', readyToLoad)
+  }
+}
 
 // Helper function to set Attributes on DOM elements
 function setAttributes(element, attributes) {
@@ -20,6 +34,8 @@ function setAttributes(element, attributes) {
 
 // Create Elements for Links & Photos, Add to DOM
 function displayPhotos() {
+  imagesLoaded = 0;
+  totalImages = photosArray.length
   // Run function for each object in photosArray
   photosArray.forEach(photo => {
     // Create <a> element to link to Unsplash
@@ -39,6 +55,8 @@ function displayPhotos() {
     // Put <img> inside <a>, then put both inside imageContainer element
     item.appendChild(img)
     imageContainer.appendChild(item)
+    // Event Listener, check when each image is finished loading
+    img.addEventListener('load', imageLoaded)
   })
   console.log(photosArray)
 }
@@ -86,8 +104,9 @@ async function getPhotos() {
 
 // Check to see if scrolling near bottom of page, load more photos
 window.addEventListener('scroll', () => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - triggerPoint) {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - triggerPoint && readyToLoad) {
     getPhotos()
+    readyToLoad = false
     console.log('Loading spot achieved')
   }
 })
