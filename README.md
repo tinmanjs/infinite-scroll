@@ -10,4 +10,6 @@ Points of Interest Include:
 
 **NOTE**: Put in your own Unsplash API Access Key to access the full effect. Otherwise, it will load the same two sample images. 
 
+Read the blog post that accompanies this repo entitled [Implementing Infinite Scroll](https://tinmanjs.com/post/implementing-infinite-scroll/).
+
 > a [tinmanJS](https://tinmanjs.com/) production
